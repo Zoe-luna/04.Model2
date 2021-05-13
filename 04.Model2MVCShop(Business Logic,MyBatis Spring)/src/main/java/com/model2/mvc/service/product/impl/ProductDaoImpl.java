@@ -55,7 +55,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public int getTotalCount(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
 	}
 
 }

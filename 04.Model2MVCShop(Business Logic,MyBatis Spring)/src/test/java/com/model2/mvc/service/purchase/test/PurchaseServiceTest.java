@@ -1,4 +1,4 @@
-package com.model2.mvc.service.product.test;
+package com.model2.mvc.service.purchase.test;
 
 import java.util.List;
 import java.util.Map;
@@ -13,10 +13,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.product.ProductService;
+import com.model2.mvc.service.purchase.PurchaseService;
 
 /*
- *	FileName :  ProductServiceTest.java
+ *	FileName :  PurchaseServiceTest.java
  * ㅇ JUnit4 (Test Framework) 과 Spring Framework 통합 Test( Unit Test)
  * ㅇ Spring 은 JUnit 4를 위한 지원 클래스를 통해 스프링 기반 통합 테스트 코드를 작성 할 수 있다.
  * ㅇ @RunWith : Meta-data 를 통한 wiring(생성,DI) 할 객체 구현체 지정
@@ -25,23 +27,23 @@ import com.model2.mvc.service.product.ProductService;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:config/commonservice.xml" })
-public class ProductServiceTest {
+public class PurchaseServiceTest {
 
 	// ==>@RunWith,@ContextConfiguration 이용 Wiring, Test 할 instance DI
 	@Autowired
-	@Qualifier("productServiceImpl")
-	private ProductService productService;
+	@Qualifier("purchaseServiceImpl")
+	private PurchaseService purchaseService;
 
 	// @Test
-	public void testAddProduct() throws Exception {
+	public void testAddPurchase() throws Exception {
+		Purchase purchase = new Purchase();
+		
+		purchase.setBuyer(null);;
+		purchase.setReceiverName("하루");
+		purchase.setTranCode("5");
+		purchase.setTranNo(50);
 
-		Product product = new Product();
-		product.setPrice(50000);
-		product.setProdNo(10008);
-		product.setProdDetail("testProdDetail");
-		product.setProdName("testProd");
-
-		productService.addProduct(product);
+		purchaseService.addPurchase(purchase);
 
 		// product = productService.getProduct(10000);
 

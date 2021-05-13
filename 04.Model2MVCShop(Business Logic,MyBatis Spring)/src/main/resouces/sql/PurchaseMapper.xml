@@ -4,22 +4,24 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ProductMapper">
+<mapper namespace="PurchaseMapper">
  	
- 	
-	<resultMap id="productSelectMap" type="product">
-		<result property="fileName" 	column="image_file" 		jdbcType="NUMERIC"/>
-		<result property="manuDate"		column="manufacture_day" 	jdbcType="VARCHAR" />
-		<result property="price" 		column="price" 				jdbcType="VARCHAR" />
-		<result property="prodDetail" 	column="prod_detail" 		jdbcType="VARCHAR" />
-		<result property="prodName" 	column="prod_name" 			jdbcType="NUMERIC" />
-		<result property="prodNo" 		column="prod_no" 			jdbcType="VARCHAR" />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
-		<!-- <result property="proTranCode" 	column="tran_status_code" 	jdbcType="NUMERIC"  />  -->
+	<resultMap id="purchaseSelectMap" type="purchase">
+		<result property="tranNo" 				column="tran_no" 			jdbcType="NUMERIC"/>
+		<result property="purchaseProd.prodNo"	column="prod_no" 			jdbcType="NUMERIC" />
+		<result property="buyer.userId" 		column="buyer_id" 			jdbcType="VARCHAR" />
+		<result property="paymentOption" 		column="payment_option" 	jdbcType="VARCHAR" />
+		<result property="receiverName" 		column="receiver_name" 		jdbcType="VARCHAR" />
+		<result property="receiverPhone" 		column="receiver_phone" 	jdbcType="VARCHAR" />
+		<result property="regDate" 				column="demailaddr" 		jdbcType="VARCHAR" />
+		<result property="regDate" 				column="dlvy_request" 		jdbcType="VARCHAR" />
+		<result property="regDate" 				column="tran_status_code"	jdbcType="VARCHAR" />
+		<result property="regDate" 				column="order_data" 		jdbcType="DATE" />
+		<result property="regDate" 				column="dlvy_date" 			jdbcType="DATE" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addProduct"		parameterType="product" >
+	<insert 	id="addPurchase"		parameterType="purchase" >
 	 	INSERT
 		INTO product( prod_no , manufacture_day , price , prod_detail , prod_name, image_file, reg_date ) 
 		VALUES	 (	seq_product_prod_no.NEXTVAL , #{manuDate:VARCHAR} , #{price:VARCHAR} , #{prodDetail:VARCHAR} , 

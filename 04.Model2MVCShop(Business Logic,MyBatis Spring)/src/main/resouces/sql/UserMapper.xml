@@ -89,7 +89,7 @@
 						 			user_id = #{searchKeyword}
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
+						 			user_name = #{searchKeyword}
 								</if>
 							</where>
 						</if> ) countTable						
