@@ -12,7 +12,7 @@ import com.model2.mvc.common.Search;
 import com.model2.mvc.service.purchase.PurchaseDao;
 import com.model2.mvc.service.domain.Purchase;
 
-@Repository("productDaoImpl")
+@Repository("purchaseDaoImpl")
 public class PurchaseDaoImpl implements PurchaseDao{
 	
 	@Autowired

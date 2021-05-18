@@ -145,7 +145,7 @@ public class ProductServiceTest {
 		System.out.println(totalCount);
 	}
 
-	@Test
+	// @Test
 	public void testGetProductListByProdNo() throws Exception {
 
 		Search search = new Search();
