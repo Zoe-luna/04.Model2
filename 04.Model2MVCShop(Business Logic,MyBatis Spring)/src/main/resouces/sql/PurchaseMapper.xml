@@ -25,11 +25,79 @@
 	 	INSERT
 		INTO transaction ( tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, 
 							demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date ) 
-		VALUES	 (	seq_transaction_tran_no.NEXTVAL, #{purchaseProd.prodNo} , #{buyer.userId} , 
+		VALUES	 (	seq_transaction_tran_no.NEXTVAL , #{purchaseProd.prodNo} , #{buyer.userId} , 
 					#{paymentOption:CHAR} , #{receiverName:CHAR} ,	#{receiverPhone:VARCHAR} , 
 					#{divyAddr:VARCHAR} , #{divyRequest:VARCHAR} , #{tranCode:VARCHAR} , SYSDATE , #{divyDate:DATE} )
 	 </insert>
 	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPurchase"	parameterType="int"	resultMap="purchaseSelectMap">
+		SELECT
+		tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, 
+							demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 		
+		FROM transaction 
+		WHERE tran_no = #{value}
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPurchase2"	parameterType="int"	resultMap="purchaseSelectMap">
+		SELECT
+		tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, 
+							demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
+		FROM transaction		 
+		WHERE prod_no= #{value}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updatePurchase"	parameterType="purchase" >
+	   	UPDATE transaction
+	   	<set>
+	   		payment_option 		= #{paymentOption:CHAR} ,
+			receiver_name		= #{receiverName:CHAR} ,
+			receiver_phone 		= #{receiverPhone:VARCHAR} ,
+			demailaddr			= #{divyAddr:VARCHAR} ,
+			dlvy_request		= #{divyRequest:VARCHAR} ,
+			dlvy_date			= #{divyDate:DATE}
+	   	</set>
+	   	WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="getPurchaseList"  parameterType="search"	resultMap="purchaseSelectMap">
+	
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, 
+												demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date
+											FROM transaction
+												<where>
+													buyer_id = #{buyer.userId}
+												</where>
+											 ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*) 
+	  	FROM(	SELECT buyer_id , receiver_name , receiver_phone, tran_status_code
+						FROM transaction
+							<where>
+								buyer_id = #{buyer.userId}
+							</where>
+						 ) countTable						
+	 </select>
 	 
 	 
 </mapper>

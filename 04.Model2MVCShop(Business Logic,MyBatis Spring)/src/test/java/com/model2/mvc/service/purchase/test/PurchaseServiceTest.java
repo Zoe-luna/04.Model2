@@ -17,6 +17,7 @@ import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
+import com.model2.mvc.service.user.UserService;
 
 /*
  *	FileName :  PurchaseServiceTest.java
@@ -34,6 +35,14 @@ public class PurchaseServiceTest {
 	@Autowired
 	@Qualifier("purchaseServiceImpl")
 	private PurchaseService purchaseService;
+	
+	@Autowired
+	@Qualifier("productServiceImpl")
+	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	@Test
 	public void testAddPurchase() throws Exception {
@@ -44,16 +53,11 @@ public class PurchaseServiceTest {
 		user.setUserId("user01");
 		prod.setProdNo(10030);
 		
-		purchase.setTranNo(10020);
 		purchase.setReceiverName("하루");
 		purchase.setTranCode("5");
-		purchase.setTranNo(50);
 
 		purchaseService.addPurchase(purchase);
 
-		// product = productService.getProduct(10000);
-
-		// ==> console 확인
 		// System.out.println(user);
 
 		// ==> API 확인
@@ -61,7 +65,6 @@ public class PurchaseServiceTest {
 		Assert.assertEquals(10030, prod.getProdNo());
 		Assert.assertEquals("하루", purchase.getReceiverName());
 		Assert.assertEquals("5", purchase.getTranCode());
-		Assert.assertEquals(50, purchase.getTranNo());
 	}
 
 	// @Test
